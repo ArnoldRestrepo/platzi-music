@@ -5,6 +5,11 @@
 
     //Directivas
     p(v-show="showValue") {{ value }}
+    p(v-if="showValue") {{ value }}
+    p(v-else="showValue") {{ 'Algo Más' }}
+
+    ul
+      li(:key="item" v-for="item in items") {{ item }}
 
     // Expresiones
     // -
@@ -28,9 +33,10 @@ export default {
   googleName: 'Google Es',
   data () {
     return {
-
       /* Directives */
-      showValue: true
+      value: 'Hello',
+      showValue: false,
+      items: [1, 2, 3, 4]
 
     }
   },
