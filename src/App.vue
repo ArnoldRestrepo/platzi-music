@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import trackService from './services/track'
+console.log(trackService)
 const tracks = [
   {
     name: 'Chandelier',
