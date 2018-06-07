@@ -1,5 +1,6 @@
 <template lang="pug">
   #app
+    child
     section.section
       nav.nav.has-shadow
         .container
@@ -14,38 +15,19 @@
                 ).input.is-large
             .control
               a(@click="search").button.is-info.is-large Buscar
-          p
-            small {{ searchMessage }}
+      .container
+        p
+          small {{ searchMessage }}
       .container.results
         .columns
-          .column(v-for="t in tracks") {{ t.name  }} - {{ t.artist }}
+          .column(v-for="t in tracks")
+            | {{ t.name  }} - {{ t.artists[0].name }}
 
 
 </template>
 
 <script>
 import trackService from './services/track'
-console.log(trackService)
-const tracks = [
-  {
-    name: 'Chandelier',
-    artist: 'SIA'
-  },
-  {
-    name: 'El prestamo',
-    artist: 'Maluma'
-  },
-  {
-    name: 'Amen',
-    artist: 'Halestorm'
-  },
-  {
-    name: 'Hablame',
-    artist: 'Beto Cuevas'
-  }
-]
-
-console.log(tracks)
 
 export default {
   name: 'app',
@@ -65,7 +47,10 @@ export default {
   },
   methods: {
     search () {
-      this.tracks = tracks
+      if (!this.searchQuery) { return }
+      trackService.search(this.searchQuery).then((res) => {
+        this.tracks = res.tracks.items
+      })
     }
   },
   components: {
