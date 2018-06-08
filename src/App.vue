@@ -1,8 +1,9 @@
 <template lang="pug">
   #app
-    child
-    section.section
-      nav.nav.has-shadow
+    pm-header
+    pm-loader(v-show="isLoading")
+    section.section(v-show="!isLoading")
+      nav.nav
         .container
           .field.has-addons
             .control
@@ -19,22 +20,33 @@
         p
           small {{ searchMessage }}
       .container.results
-        .columns
-          .column(v-for="t in tracks")
-            | {{ t.name  }} - {{ t.artists[0].name }}
-
+        .columns.is-multiline
+          .column.is-one-quarter(v-for="t in tracks")
+            pm-track(
+              v-bind:class="{ 'is-active': t.id === selectedTrack }",
+              v-bind:track="t",
+              v-on:select="setSelectedTrack"
+            )
+    pm-footer
 
 </template>
 
 <script>
-import trackService from './services/track'
+import trackService from '@/services/track'
+import PmFooter from '@/components/layout/Footer'
+import PmHeader from '@/components/layout/Header'
+
+import PmTrack from '@/components/Track'
+import PmLoader from '@/components/shared/Loader'
 
 export default {
   name: 'app',
   data () {
     return {
       searchQuery: '',
-      tracks: []
+      tracks: [],
+      isLoading: false,
+      selectedTrack: ''
     }
   },
   computed: {
@@ -48,13 +60,21 @@ export default {
   methods: {
     search () {
       if (!this.searchQuery) { return }
+      this.isLoading = true
       trackService.search(this.searchQuery).then((res) => {
+        this.isLoading = false
         this.tracks = res.tracks.items
       })
+    },
+    setSelectedTrack (id) {
+      this.selectedTrack = id
     }
   },
   components: {
-
+    PmFooter,
+    PmHeader,
+    PmTrack,
+    PmLoader
   }
 }
 </script>
@@ -64,6 +84,10 @@ export default {
 
 .results{
   margin-top: 30px;
+}
+
+.is-active {
+  border: 3px #23d160 solid;
 }
 
 </style>
