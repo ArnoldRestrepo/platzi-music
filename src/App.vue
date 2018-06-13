@@ -2,8 +2,8 @@
   #app
     pm-header
 
-    pm-notification(v-show="showNotification")
-      p(slot="body") No se encontraron resultados
+    pm-notification(v-show="showNotification", v-bind:results="hasResults")
+      p(slot="body") {{ hasResults ? searchMessage : 'No se han econtraron resultados' }}
     pm-loader(v-show="isLoading")
     section.section(v-show="!isLoading")
       nav.nav
@@ -19,9 +19,6 @@
                 ).input.is-large
             .control
               a(@click="search").button.is-info.is-large Buscar
-      .container
-        p
-          small {{ searchMessage }}
       .container.results
         .columns.is-multiline
           .column.is-one-quarter(v-for="t in tracks")
@@ -58,7 +55,10 @@ export default {
   },
   computed: {
     searchMessage () {
-      return `Encontrados ${this.tracks.length} resultados`
+      return `Encontramos: ${this.tracks.length} resultados`
+    },
+    hasResults () {
+      return this.tracks.length > 0
     }
   },
   watch: {
@@ -75,8 +75,7 @@ export default {
       if (!this.searchQuery) { return }
       this.isLoading = true
       trackService.search(this.searchQuery).then((res) => {
-        console.log(res)
-        this.showNotification = res.tracks.total === 0
+        this.showNotification = true
         this.isLoading = false
         this.tracks = res.tracks.items
       })

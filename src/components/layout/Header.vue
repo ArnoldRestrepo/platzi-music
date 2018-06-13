@@ -7,10 +7,10 @@
             .nav-item
               strong 📻 Platzi Music
             .nav-item
-              strong {{ person }}
-          .nav-right.nav-menu
-            .nav-item
-              button(v-on:click="addProp") Añadir Propiedad
+          //     strong {{ person }}
+          // .nav-right.nav-menu
+          //   .nav-item
+          //     button(v-on:click="addProp") Añadir Propiedad
     .hero-body
       .container.has-text-centered
         h1.title Platzi Music
