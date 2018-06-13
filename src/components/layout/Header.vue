@@ -15,8 +15,12 @@
       .container.has-text-centered
         h1.title Platzi Music
         h2.subtitle Canciones que estan en Vue
+        pm-player
 </template>
 <script>
+// Player
+import PmPlayer from '@/components/Player'
+console.log(PmPlayer)
 export default {
   name: 'PmHeader',
   data () {
@@ -32,6 +36,9 @@ export default {
       // this.$set(this.person, 'lastName', 'Restrepo')
       this.person = Object.assign({}, this.person, { 'lastName': 'Restrepo', 'fullName': 'Hernández' })
     }
+  },
+  components: {
+    PmPlayer
   }
 }
 </script>
