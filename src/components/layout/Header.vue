@@ -1,16 +1,16 @@
 <template lang="pug">
   section.hero.is-success
     .hero-head
-      header.nav
+      header
         .container
-          .nav-left
-            .nav-item
-              strong 📻 Platzi Music
-            .nav-item
-          //     strong {{ person }}
-          // .nav-right.nav-menu
-          //   .nav-item
-          //     button(v-on:click="addProp") Añadir Propiedad
+          nav.navbar-menu
+            .navbar-start
+              .navbar-item
+                strong 📻 Platzi Music
+            .navbar-end
+              router-link.navbar-item(to="home") Home
+              router-link.navbar-item(:to="{ name: 'search' }") Search
+              router-link.navbar-item(to="about") About
     .hero-body
       .container.has-text-centered
         h1.title Platzi Music
@@ -20,7 +20,7 @@
 <script>
 // Player
 import PmPlayer from '@/components/Player'
-console.log(PmPlayer)
+
 export default {
   name: 'PmHeader',
   data () {
@@ -42,4 +42,7 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+
+</style>
 

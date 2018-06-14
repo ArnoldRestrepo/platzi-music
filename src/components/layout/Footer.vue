@@ -11,17 +11,7 @@ export default {
     return {
       name: 'Hello'
     }
-  },
-  beforeCreate () {
-    console.log('before Created Footer Component')
-  },
-  created () {
-    console.log('created Footer Component')
-  },
-  mounted () {
-    console.log('Component mounted')
   }
-
 }
 </script>
 
