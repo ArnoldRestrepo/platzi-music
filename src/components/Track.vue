@@ -13,7 +13,7 @@
             strong {{ track.name }}
           p.subtitle.is-6 {{ track.artists[0].name }}
       .content
-        small {{ track.duration_ms }}
+        small {{ track.duration_ms | ms-to-mm }}
     .card-footer
       .card-footer-item
         button.button.is-success(@click="selectTrack") Play ►
@@ -21,6 +21,8 @@
         button.button.is-dark(@click="goToTrack(track.id)") Ir a la 💿
 </template>
 <script>
+import trackMixin from '@/mixins/track'
+
 export default {
   name: 'PmTrack',
   props: {
@@ -29,12 +31,12 @@ export default {
       required: true
     }
   },
+  mixins: [
+    trackMixin
+  ],
   methods: {
-    selectTrack () {
-      this.$emit('select', this.track.id)
-      this.$bus.$emit('set-track', this.track)
-    },
     goToTrack (id) {
+      if (!this.track.preview_url) { return }
       this.$router.push({ name: 'track', params: { id } })
     }
   }

@@ -13,7 +13,8 @@
               input(
                 type="text",
                 placeholder="Buscar Canciones:",
-                v-model="searchQuery"
+                v-model="searchQuery",
+                @keyup.enter="search"
                 ).input.is-large
             .control
               a(@click="search").button.is-info.is-large Buscar
@@ -21,9 +22,10 @@
         .columns.is-multiline
           .column.is-one-quarter(v-for="t in tracks")
             pm-track(
+              v-blur="t.preview_url"
               v-bind:class="{ 'is-active': t.id === selectedTrack }",
               v-bind:track="t",
-              v-on:select="setSelectedTrack"
+              @select="setSelectedTrack"
             )
 </template>
 
@@ -68,6 +70,7 @@ export default {
     search () {
       if (!this.searchQuery) { return }
       this.isLoading = true
+      this.tracks = []
       trackService.search(this.searchQuery).then((res) => {
         this.showNotification = true
         this.isLoading = false
