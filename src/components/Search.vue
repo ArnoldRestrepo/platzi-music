@@ -1,8 +1,10 @@
 <template lang="pug">
   main
-    pm-notification(v-show="showNotification", v-bind:results="hasResults")
-      p(slot="body") {{ hasResults ? searchMessage : 'No se han econtraron resultados' }}
-    pm-loader(v-show="isLoading")
+    transition(name="move")
+      pm-notification(v-show="showNotification", v-bind:results="hasResults")
+        p(slot="body") {{ hasResults ? searchMessage : 'No se han econtraron resultados' }}
+    transition(name="move")
+      pm-loader(v-show="isLoading")
     section.section(v-show="!isLoading")
       nav.nav
         .container

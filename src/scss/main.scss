@@ -1,3 +1,13 @@
 @import'~bulma/bulma.sass';
 
 body{padding: 1rem;}
+
+// Animation
+.move-enter-active, .move-leave-active{
+  opacity: 1;
+  transition: all 500ms ease;
+}
+
+.move-enter, .move-leave-to{
+  opacity: 0;
+}
