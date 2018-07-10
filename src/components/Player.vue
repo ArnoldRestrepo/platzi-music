@@ -10,17 +10,11 @@
       audio(controls, v-bind:src="track.preview_url")
 </template>
 <script>
+import { mapState } from 'Vuex'
 export default {
   name: 'PmPlayer',
-  data () {
-    return {
-      track: {}
-    }
-  },
-  created () {
-    this.$bus.$on('set-track', (track) => {
-      this.track = track
-    })
+  computed: {
+    ...mapState(['track'])
   }
 }
 </script>
